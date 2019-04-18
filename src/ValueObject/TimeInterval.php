@@ -147,6 +147,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * Short time string parse as HH:MM
      *
      * @var bool
+     * @return void
      */
     public static function shortTimeAsMinutes()
     {
@@ -157,6 +158,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * Short time string parse as MM:SS
      *
      * @var bool
+     * @return void
      */
     public static function shortTimeAsSeconds()
     {
