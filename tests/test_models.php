@@ -49,8 +49,10 @@ namespace Elastic\TimeInterval\Model\Table {
         {
             parent::_initializeSchema($schema);
 
-            $schema->setColumnType('rest', 'time_interval');
-            $schema->setColumnType('duration', 'time_interval');
+            error_reporting(E_ALL & ~E_USER_DEPRECATED);
+            $schema->columnType('rest', 'time_interval');
+            $schema->columnType('duration', 'time_interval');
+            error_reporting(E_ALL);
 
             return $schema;
         }

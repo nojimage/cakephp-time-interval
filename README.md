@@ -56,6 +56,8 @@ class WorkTimesTable extends Table
         parent::_initializeSchema($schema);
 
         $schema->setColumnType('duration', 'time_interval');
+        // CakePHP <= 3.4.x use columnType() instead.
+        $schema->columnType('duration', 'time_interval');
 
         return $schema;
     }
