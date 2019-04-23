@@ -32,6 +32,7 @@ namespace Elastic\TimeInterval\Model\Table {
     use Cake\ORM\Table;// @codingStandardsIgnoreLine
     use Cake\Validation\Validator;// @codingStandardsIgnoreLine
     use Elastic\TimeInterval\Model\Entity\WorkTime;// @codingStandardsIgnoreLine
+    use Elastic\TimeInterval\Validation\TimeIntervalValidation;// @codingStandardsIgnoreLine
 
     /**
      * @method WorkTime get($primaryKey, $options = [])
@@ -60,6 +61,11 @@ namespace Elastic\TimeInterval\Model\Table {
 
         public function validationDefault(Validator $validator)
         {
+            // for CakePHP <= 3.4
+            if (!$validator->getProvider('timeInterval')) {
+                $validator->setProvider('timeInterval', TimeIntervalValidation::class);
+            }
+
             $validator->add('rest', 'timeInterval', [
                 'rule' => 'timeInterval',
                 'provider' => 'timeInterval',

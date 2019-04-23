@@ -15,4 +15,6 @@ if (!Type::$getMap('time_interval')) {
     Type::map('time_interval', TimeIntervalType::class);
 }
 
-Validator::addDefaultProvider('timeInterval', TimeIntervalValidation::class);
+if (method_exists(Validator::class, 'addDefaultProvider')) {
+    Validator::addDefaultProvider('timeInterval', TimeIntervalValidation::class);
+}

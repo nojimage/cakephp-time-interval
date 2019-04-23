@@ -71,12 +71,16 @@ The `timeInterval` rule is in the `timeInterval` validation provider.
 
 ```php
 use Cake\Validation\Validator;
+use Elastic\TimeInterval\Validation\TimeIntervalValidation;
 
 class WorkTimesTable extends Table
 {
     public function validationDefault(Validator $validator)
     {
         // ...
+
+        // CakePHP <= 3.4.x required setProvider. CakePHP >= 3.5 it's not necessary.
+        $validator->setProvider('timeInterval', TimeIntervalValidation::class);
 
         $validator->add('duration', 'timeInterval', [
             'rule' => 'timeInterval',
