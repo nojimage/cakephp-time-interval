@@ -44,7 +44,7 @@ Plugin::load('Elastic/TimeInterval', ['bootstrap' => true]);
 
 ## Usage
 
-### Add column definitions to Table
+### Add column definitions to Table class
 
 ```php
 use Cake\Database\Schema\TableSchema;
@@ -60,6 +60,30 @@ class WorkTimesTable extends Table
         $schema->columnType('duration', 'time_interval');
 
         return $schema;
+    }
+}
+```
+
+### Add column validation to Table class
+
+Use `timeInterval` rule instead of `time`.
+The `timeInterval` rule is in the `timeInterval` validation provider. 
+
+```php
+use Cake\Validation\Validator;
+
+class WorkTimesTable extends Table
+{
+    public function validationDefault(Validator $validator)
+    {
+        // ...
+
+        $validator->add('duration', 'timeInterval', [
+            'rule' => 'timeInterval',
+            'provider' => 'timeInterval',
+        ]);
+
+        return $validator;
     }
 }
 ```

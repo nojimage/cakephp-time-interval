@@ -30,6 +30,7 @@ namespace Elastic\TimeInterval\Model\Table {
     use Cake\Database\Schema\TableSchema;// @codingStandardsIgnoreLine
     use Cake\Datasource\EntityInterface;// @codingStandardsIgnoreLine
     use Cake\ORM\Table;// @codingStandardsIgnoreLine
+    use Cake\Validation\Validator;// @codingStandardsIgnoreLine
     use Elastic\TimeInterval\Model\Entity\WorkTime;// @codingStandardsIgnoreLine
 
     /**
@@ -55,6 +56,20 @@ namespace Elastic\TimeInterval\Model\Table {
             error_reporting(E_ALL);
 
             return $schema;
+        }
+
+        public function validationDefault(Validator $validator)
+        {
+            $validator->add('rest', 'timeInterval', [
+                'rule' => 'timeInterval',
+                'provider' => 'timeInterval',
+            ]);
+            $validator->add('duration', 'timeInterval', [
+                'rule' => 'timeInterval',
+                'provider' => 'timeInterval',
+            ]);
+
+            return $validator;
         }
     }
 }

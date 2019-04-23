@@ -82,6 +82,7 @@ class TimeIntervalTest extends TestCase
             ['00:15:01', '00:15:01'],
             ['25:15:01', '25:15:01'],
             ['-25:15:01', '-25:15:01'],
+            ['1:00:01', '01:00:01'],
             ['', '00:00:00'], // empty string as 00:00:00
         ];
     }
@@ -96,12 +97,14 @@ class TimeIntervalTest extends TestCase
         $this->assertSame('01:15:00', (string)TimeInterval::createFromString('01:15'));
         $this->assertSame('26:30:00', (string)TimeInterval::createFromString('26:30'));
         $this->assertSame('-00:45:00', (string)TimeInterval::createFromString('-00:45'));
+        $this->assertSame('01:02:00', (string)TimeInterval::createFromString('1:02'));
 
         TimeInterval::shortTimeAsSeconds();
         $this->assertSame('00:00:00', (string)TimeInterval::createFromString('00:00'));
         $this->assertSame('00:01:15', (string)TimeInterval::createFromString('01:15'));
         $this->assertSame('00:26:30', (string)TimeInterval::createFromString('26:30'));
         $this->assertSame('-00:00:45', (string)TimeInterval::createFromString('-00:45'));
+        $this->assertSame('00:01:55', (string)TimeInterval::createFromString('1:55'));
     }
 
     /**
