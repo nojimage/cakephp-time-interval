@@ -14,6 +14,15 @@ use UnexpectedValueException;
 class TimeInterval extends DateInterval implements JsonSerializable
 {
     /**
+     * interval seconds
+     *
+     * for comparison object
+     *
+     * @var int
+     */
+    public $seconds;
+
+    /**
      * Short time string parse as HH:MM
      *
      * if this flag to false, then parse as MM:SS
@@ -35,6 +44,16 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @var string
      */
     protected static $toJsonFormat = '%r%H:%I:%S';
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct($interval_spec)
+    {
+        parent::__construct($interval_spec);
+
+        $this->seconds = $this->toSeconds();
+    }
 
     /**
      * {@inheritDoc}
