@@ -2,11 +2,11 @@
 
 namespace Elastic\TimeInterval\Test\TestCase\Validation;
 
+use Cake\TestSuite\TestCase;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use Elastic\TimeInterval\Validation\TimeIntervalValidation;
-use Cake\TestSuite\TestCase;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use stdClass;
 
