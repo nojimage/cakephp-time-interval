@@ -4,17 +4,17 @@ namespace Elastic\TimeInterval\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;
-use DateInterval;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use Exception;
+use PDO;
 use UnexpectedValueException;
 
 /**
- * TimeInterval custom type for MySQL's TIME column
+ * TimeInterval custom type for INTEGER column
  *
  * @link http://book.cakephp.org/3.0/en/orm/database-basics.html#adding-custom-database-types
  */
-class TimeIntervalType extends Type
+class TimeIntervalAsIntType extends Type
 {
     use TimeIntervalMarshalTrait;
 
@@ -30,7 +30,7 @@ class TimeIntervalType extends Type
             return null;
         }
 
-        return TimeInterval::createFromString($value);
+        return TimeInterval::createFromSeconds($value);
     }
 
     /**
@@ -50,6 +50,18 @@ class TimeIntervalType extends Type
             $value = $this->marshal($value);
         }
 
-        return (string)$value;
+        return $value->toSeconds();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function toStatement($value, Driver $driver)
+    {
+        if ($value === null) {
+            return PDO::PARAM_NULL;
+        }
+
+        return PDO::PARAM_INT;
     }
 }

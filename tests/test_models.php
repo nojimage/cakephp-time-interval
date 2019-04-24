@@ -12,6 +12,7 @@ namespace Elastic\TimeInterval\Model\Entity {
      * @property FrozenTime $start
      * @property FrozenTime $end
      * @property TimeInterval $rest
+     * @property TimeInterval $rest_seconds
      * @property TimeInterval $duration
      */
     class WorkTime extends Entity
@@ -53,6 +54,7 @@ namespace Elastic\TimeInterval\Model\Table {
 
             error_reporting(E_ALL & ~E_USER_DEPRECATED);
             $schema->columnType('rest', 'time_interval');
+            $schema->columnType('rest_seconds', 'time_interval_int');
             $schema->columnType('duration', 'time_interval');
             error_reporting(E_ALL);
 
@@ -67,6 +69,10 @@ namespace Elastic\TimeInterval\Model\Table {
             }
 
             $validator->add('rest', 'timeInterval', [
+                'rule' => 'timeInterval',
+                'provider' => 'timeInterval',
+            ]);
+            $validator->add('rest_seconds', 'timeInterval', [
                 'rule' => 'timeInterval',
                 'provider' => 'timeInterval',
             ]);

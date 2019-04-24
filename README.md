@@ -15,7 +15,8 @@
     </a>
 </p>
 
-This plugin provide `time_interval` custom type for MySQL's `TIME`, Postgres's `INTERVAL`.
+This plugin provide `time_interval` custom type for MySQL's `TIME`, Postgres's `INTERVAL`,
+ and provide `time_interval_int` custom type for seconds as `INTEGER`.
 This is a custom type to represent intervals, which CakePHP can treat as a `TimeInterval` object that inherits from `DateInterval`.
 
 ## Installation
@@ -58,6 +59,9 @@ class WorkTimesTable extends Table
         $schema->setColumnType('duration', 'time_interval');
         // CakePHP <= 3.4.x use columnType() instead.
         $schema->columnType('duration', 'time_interval');
+
+        // If your column type is seconds as INTEGER, Use `time_interval_int` instead.
+        $schema->setColumnType('duration_sec', 'time_interval_int');
 
         return $schema;
     }

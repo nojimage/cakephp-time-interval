@@ -36,6 +36,10 @@ class WorkTimesTableTest extends TestCase
         $record = $this->table->get(1);
         $this->assertInstanceOf(TimeInterval::class, $record->rest);
         $this->assertSame('01:00:00', (string)$record->rest);
+
+        $this->assertInstanceOf(TimeInterval::class, $record->rest_seconds);
+        $this->assertSame('01:00:00', (string)$record->rest_seconds);
+
         $this->assertInstanceOf(TimeInterval::class, $record->duration);
         $this->assertSame('08:00:00', (string)$record->duration);
     }
@@ -112,5 +116,32 @@ class WorkTimesTableTest extends TestCase
         $recordFromSeconds = $this->table->get($record->id);
         $this->assertInstanceOf(TimeInterval::class, $recordFromSeconds->rest);
         $this->assertSame('02:03:04', (string)$recordFromSeconds->rest);
+    }
+
+    public function testSaveAsInt()
+    {
+        $record = $this->table->get(1);
+
+        // set with time string and save
+        $record->rest_seconds = '00:15:01';
+        $this->assertNotFalse($this->table->save($record));
+        $recordFromTimeString = $this->table->get($record->id);
+        $this->assertInstanceOf(TimeInterval::class, $recordFromTimeString->rest_seconds);
+        $this->assertSame('00:15:01', (string)$recordFromTimeString->rest_seconds);
+
+        // set with DateInterval object and save
+        $now = FrozenTime::now();
+        $record->rest_seconds = $now->diff($now->addDays(2)->addHour()->addMinutes(2)->addSeconds(3));
+        $this->assertNotFalse($this->table->save($record));
+        $recordFromDateInterval = $this->table->get($record->id);
+        $this->assertInstanceOf(TimeInterval::class, $recordFromDateInterval->rest_seconds);
+        $this->assertSame('49:02:03', (string)$recordFromDateInterval->rest_seconds);
+
+        // set with seconds and save
+        $record->rest_seconds = 7200 + 180 + 4;
+        $this->assertNotFalse($this->table->save($record));
+        $recordFromSeconds = $this->table->get($record->id);
+        $this->assertInstanceOf(TimeInterval::class, $recordFromSeconds->rest_seconds);
+        $this->assertSame('02:03:04', (string)$recordFromSeconds->rest_seconds);
     }
 }
