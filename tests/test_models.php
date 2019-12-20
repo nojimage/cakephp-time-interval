@@ -1,11 +1,13 @@
 <?php
-
+/**
+ * @codingStandardsIgnoreFile
+ */
 namespace Elastic\TimeInterval\Model\Entity {
 
-    use Cake\Database\Type;// @codingStandardsIgnoreLine
-    use Cake\I18n\FrozenTime;// @codingStandardsIgnoreLine
-    use Cake\ORM\Entity;// @codingStandardsIgnoreLine
-    use Elastic\TimeInterval\ValueObject\TimeInterval;// @codingStandardsIgnoreLine
+    use Cake\Database\Type;
+    use Cake\I18n\FrozenTime;
+    use Cake\ORM\Entity;
+    use Elastic\TimeInterval\ValueObject\TimeInterval;
 
     /**
      * @property integer $id
@@ -28,12 +30,12 @@ namespace Elastic\TimeInterval\Model\Entity {
 
 namespace Elastic\TimeInterval\Model\Table {
 
-    use Cake\Database\Schema\TableSchema;// @codingStandardsIgnoreLine
-    use Cake\Datasource\EntityInterface;// @codingStandardsIgnoreLine
-    use Cake\ORM\Table;// @codingStandardsIgnoreLine
-    use Cake\Validation\Validator;// @codingStandardsIgnoreLine
-    use Elastic\TimeInterval\Model\Entity\WorkTime;// @codingStandardsIgnoreLine
-    use Elastic\TimeInterval\Validation\TimeIntervalValidation;// @codingStandardsIgnoreLine
+    use Cake\Database\Schema\TableSchema;
+    use Cake\Datasource\EntityInterface;
+    use Cake\ORM\Table;
+    use Cake\Validation\Validator;
+    use Elastic\TimeInterval\Model\Entity\WorkTime;
+    use Elastic\TimeInterval\Validation\TimeIntervalValidation;
 
     /**
      * @method WorkTime get($primaryKey, $options = [])
