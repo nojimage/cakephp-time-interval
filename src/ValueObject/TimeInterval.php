@@ -65,7 +65,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromDateString($datetime)
+    public static function createFromDateString($datetime): DateInterval
     {
         $original = parent::createFromDateString($datetime);
 
