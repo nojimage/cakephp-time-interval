@@ -1,4 +1,4 @@
-# TimeInterval plugin for CakePHP 3.x
+# TimeInterval plugin for CakePHP
 
 <p align="center">
     <a href="LICENSE.txt" target="_blank">
@@ -31,16 +31,10 @@ composer require elstc/cakephp-time-interval
 
 ### Load plugin
 
-(CakePHP >= 3.6.0) Load the plugin by adding the following statement in your project's `src/Application.php`:
+Load the plugin by adding the following statement in your project's `src/Application.php`:
 
 ```
 $this->addPlugin('Elastic/TimeInterval');
-```
-
-(CakePHP <= 3.5.x) Load the plugin by adding the following statement in your project's `config/bootstrap.php` file:
-
-```
-Plugin::load('Elastic/TimeInterval', ['bootstrap' => true]);
 ```
 
 ## Usage
@@ -57,8 +51,6 @@ class WorkTimesTable extends Table
         parent::_initializeSchema($schema);
 
         $schema->setColumnType('duration', 'time_interval');
-        // CakePHP <= 3.4.x use columnType() instead.
-        $schema->columnType('duration', 'time_interval');
 
         // If your column type is seconds as INTEGER, Use `time_interval_int` instead.
         $schema->setColumnType('duration_sec', 'time_interval_int');
@@ -82,10 +74,6 @@ class WorkTimesTable extends Table
     public function validationDefault(Validator $validator)
     {
         // ...
-
-        // CakePHP <= 3.4.x required setProvider. CakePHP >= 3.5 it's not necessary.
-        $validator->setProvider('timeInterval', TimeIntervalValidation::class);
-
         $validator->add('duration', 'timeInterval', [
             'rule' => 'timeInterval',
             'provider' => 'timeInterval',

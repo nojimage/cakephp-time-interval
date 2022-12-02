@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Database\Type;
 
@@ -15,7 +19,7 @@ trait TimeIntervalMarshalTrait
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public function marshal($value)
+    public function marshal($value): ?TimeInterval
     {
         if ($value === null || $value instanceof TimeInterval) {
             return $value;

@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Test\Fixture;
 

@@ -1,12 +1,15 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Test\TestCase\Model\Table;
 
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Elastic\TimeInterval\Model\Table\WorkTimesTable;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
+use TestApp\Model\Table\WorkTimesTable;
 
 class WorkTimesTableTest extends TestCase
 {
@@ -19,19 +22,21 @@ class WorkTimesTableTest extends TestCase
      */
     private $table;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
-        $this->table = TableRegistry::get('Elastic/TimeInterval.WorkTimes');
+        $this->loadPlugins(['Elastic/TimeInterval']);
+
+        $this->table = $this->getTableLocator()->get('WorkTimes');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->table);
         parent::tearDown();
     }
 
-    public function testGetFromDb()
+    public function testGetFromDb(): void
     {
         $record = $this->table->get(1);
         $this->assertInstanceOf(TimeInterval::class, $record->rest);
@@ -44,7 +49,7 @@ class WorkTimesTableTest extends TestCase
         $this->assertSame('08:00:00', (string)$record->duration);
     }
 
-    public function testMutation()
+    public function testMutation(): void
     {
         // set with time string
         $recordFromTimeString = $this->table->newEntity([
@@ -69,7 +74,7 @@ class WorkTimesTableTest extends TestCase
         $this->assertSame('02:03:04', (string)$recordFromSeconds->rest);
     }
 
-    public function testEntityMutation()
+    public function testEntityMutation(): void
     {
         // set with time string
         $recordFromTimeString = $this->table->newEntity([]);
@@ -91,7 +96,7 @@ class WorkTimesTableTest extends TestCase
         $this->assertSame('02:03:04', (string)$recordFromSeconds->duration);
     }
 
-    public function testSaveAs()
+    public function testSaveAs(): void
     {
         $record = $this->table->get(1);
 
@@ -118,7 +123,7 @@ class WorkTimesTableTest extends TestCase
         $this->assertSame('02:03:04', (string)$recordFromSeconds->rest);
     }
 
-    public function testSaveAsInt()
+    public function testSaveAsInt(): void
     {
         $record = $this->table->get(1);
 

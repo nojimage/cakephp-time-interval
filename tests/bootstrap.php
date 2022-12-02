@@ -1,7 +1,12 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use Cake\I18n\FrozenTime;
 
 /**
  * Test suite bootstrap for RememberMe.
@@ -19,7 +24,7 @@ $findRoot = function ($root) {
         }
     } while ($root !== $lastRoot);
 
-    throw new Exception("Cannot find the root of the application, unable to run tests");
+    throw new Exception('Cannot find the root of the application, unable to run tests');
 };
 $root = $findRoot(__FILE__);
 unset($findRoot);
@@ -29,17 +34,10 @@ $here = __DIR__;
 chdir($root);
 require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 
-// Disable deprecations for now when using 3.6
-if (version_compare(Configure::version(), '3.6.0', '>=')) {
-    error_reporting(E_ALL ^ E_USER_DEPRECATED);
-}
-if (class_exists('\Cake\I18n\FrozenTime')) {
-    \Cake\I18n\FrozenTime::setJsonEncodeFormat('yyyy-MM-dd\'T\'HH:mm:ssxxx');
-}
-\Cake\I18n\Time::setJsonEncodeFormat('yyyy-MM-dd\'T\'HH:mm:ssxxx');
+Cache::clearAll();
 
-Plugin::load('Elastic/DateInterval', ['path' => dirname(__DIR__) . DS, 'bootstrap' => true]);
+FrozenTime::setJsonEncodeFormat('yyyy-MM-dd\'T\'HH:mm:ssxxx');
 
 error_reporting(E_ALL);
 
-require $here . '/test_models.php';
+Configure::write('App.namespace', 'TestApp');

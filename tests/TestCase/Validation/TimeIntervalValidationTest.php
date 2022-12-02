@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Test\TestCase\Validation;
 
@@ -20,7 +24,7 @@ class TimeIntervalValidationTest extends TestCase
      *
      * @return void
      */
-    public function testTimeInterval()
+    public function testTimeInterval(): void
     {
         // long time format
         $this->assertTrue(TimeIntervalValidation::timeInterval('00:00:00'));
@@ -60,7 +64,7 @@ class TimeIntervalValidationTest extends TestCase
      *
      * @return void
      */
-    public function testTimeArray()
+    public function testTimeArray(): void
     {
         $date = ['hour' => 13, 'minute' => 14, 'second' => 15];
         $this->assertTrue(TimeIntervalValidation::timeInterval($date));
@@ -77,7 +81,7 @@ class TimeIntervalValidationTest extends TestCase
      *
      * @return void
      */
-    public function testTimeIntervalObject()
+    public function testTimeIntervalObject(): void
     {
         $interval = new DateInterval('PT1H');
         $this->assertTrue(TimeIntervalValidation::timeInterval($interval));
@@ -89,6 +93,7 @@ class TimeIntervalValidationTest extends TestCase
         $this->assertTrue(TimeIntervalValidation::timeInterval(TimeInterval::createFromString('-01:00:00')));
         $this->assertFalse(TimeIntervalValidation::timeInterval(new DateTime()));
         $this->assertFalse(TimeIntervalValidation::timeInterval(new DateTimeImmutable()));
+        /** @noinspection PhpParamsInspection */
         $this->assertFalse(TimeIntervalValidation::timeInterval(new stdClass()));
     }
 
@@ -97,7 +102,7 @@ class TimeIntervalValidationTest extends TestCase
      *
      * @return void
      */
-    public function testTimeIntervalNotAllowNegative()
+    public function testTimeIntervalNotAllowNegative(): void
     {
         $this->assertTrue(TimeIntervalValidation::timeInterval('00:00:00', false));
         $this->assertTrue(TimeIntervalValidation::timeInterval('23:59:59', false));

@@ -1,9 +1,14 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Test\TestCase\ValueObject;
 
 use Cake\I18n\FrozenTime;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TimeIntervalTest extends TestCase
 {
-    public function testToString()
+    public function testToString(): void
     {
         $this->assertSame('00:00:01', (string)(new TimeInterval('PT1S')));
         $this->assertSame('00:01:15', (string)(new TimeInterval('PT1M15S')));
@@ -23,7 +28,7 @@ class TimeIntervalTest extends TestCase
         $this->assertSame('-00:01:15', (string)$negativeInterval);
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $this->assertSame('"00:00:01"', json_encode(new TimeInterval('PT1S')));
         $this->assertSame('"00:01:15"', json_encode(new TimeInterval('PT1M15S')));
@@ -35,7 +40,7 @@ class TimeIntervalTest extends TestCase
         $this->assertSame('"-00:01:15"', json_encode($negativeInterval));
     }
 
-    public function testToSeconds()
+    public function testToSeconds(): void
     {
         $this->assertSame(1, (new TimeInterval('PT1S'))->toSeconds());
         $this->assertSame(75, (new TimeInterval('PT1M15S'))->toSeconds());
@@ -45,7 +50,7 @@ class TimeIntervalTest extends TestCase
         $this->assertSame(-75, $negativeInterval->toSeconds());
     }
 
-    public function testCreateFromDateInterval()
+    public function testCreateFromDateInterval(): void
     {
         $interval = TimeInterval::createFromDateInterval(new TimeInterval('P1DT2H30M15S'));
         $this->assertSame('26:30:15', (string)$interval);
@@ -62,9 +67,9 @@ class TimeIntervalTest extends TestCase
      * @dataProvider dataCreateFromString
      * @param string $value the value
      * @param string $expected the expected value
-     * @throws \Exception
+     * @throws Exception
      */
-    public function testCreateFromString($value, $expected)
+    public function testCreateFromString(string $value, string $expected): void
     {
         $interval = TimeInterval::createFromString($value);
         $this->assertSame($expected, (string)$interval);
@@ -75,7 +80,7 @@ class TimeIntervalTest extends TestCase
      *
      * @return array
      */
-    public function dataCreateFromString()
+    public function dataCreateFromString(): array
     {
         return [
             ['00:00:01', '00:00:01'],
@@ -88,9 +93,9 @@ class TimeIntervalTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function testCreateFromStringWithShortTime()
+    public function testCreateFromStringWithShortTime(): void
     {
         // default parse as HH:MM
         $this->assertSame('00:00:00', (string)TimeInterval::createFromString('00:00'));
@@ -109,11 +114,11 @@ class TimeIntervalTest extends TestCase
 
     /**
      * @dataProvider dataCreateFromSeconds
-     * @param string $value the value
+     * @param int $value the value
      * @param string $expected the expected value
-     * @throws \Exception
+     * @throws Exception
      */
-    public function testCreateFromSeconds($value, $expected)
+    public function testCreateFromSeconds(int $value, string $expected): void
     {
         $interval = TimeInterval::createFromSeconds($value);
         $this->assertSame($expected, (string)$interval);
@@ -125,7 +130,7 @@ class TimeIntervalTest extends TestCase
      *
      * @return array
      */
-    public function dataCreateFromSeconds()
+    public function dataCreateFromSeconds(): array
     {
         return [
             [1, '00:00:01'],

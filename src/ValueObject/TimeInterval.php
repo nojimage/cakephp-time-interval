@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\ValueObject;
 
@@ -46,7 +50,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
     protected static $toJsonFormat = '%r%H:%I:%S';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct($interval_spec)
     {
@@ -61,9 +65,9 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromDateString($time)
+    public static function createFromDateString($datetime)
     {
-        $original = parent::createFromDateString($time);
+        $original = parent::createFromDateString($datetime);
 
         return static::createFromDateInterval($original);
     }
@@ -76,18 +80,18 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromString($value)
+    public static function createFromString(string $value): TimeInterval
     {
         if ($value === '') {
             $value = '00:00:00';
         }
 
-        if (!preg_match('/\A(\-?)(\d+):(\d+)(?::(\d+))?\z/', $value, $matches)) {
+        if (!preg_match('/\A(-?)(\d+):(\d+)(?::(\d+))?\z/', $value, $matches)) {
             throw new UnexpectedValueException(sprintf('The value not match time format: %s', $value));
         }
 
         /** @noinspection PhpUnusedLocalVariableInspection */
-        list($all, $minus, $hours, $minutes, $seconds) = array_pad($matches, 5, null);
+        [$all, $minus, $hours, $minutes, $seconds] = array_pad($matches, 5, null);
 
         // parse as seconds
         if ($seconds === null && !static::$shortAsMinutes) {
@@ -110,7 +114,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromDateInterval(DateInterval $value)
+    public static function createFromDateInterval(DateInterval $value): TimeInterval
     {
         $hours = $value->h + (static::getDays($value) * 24);
         $minutes = $value->i;
@@ -135,7 +139,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromSeconds($seconds)
+    public static function createFromSeconds(int $seconds): TimeInterval
     {
         $startOfDay = Chronos::now()->startOfDay();
         $interval = $startOfDay->diff($startOfDay->addSeconds($seconds));
@@ -149,7 +153,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @param DateInterval $interval the DateInterval object
      * @return int
      */
-    private static function getDays(DateInterval $interval)
+    private static function getDays(DateInterval $interval): int
     {
         if ($interval->days !== false) {
             return $interval->days;
@@ -165,10 +169,10 @@ class TimeInterval extends DateInterval implements JsonSerializable
     /**
      * Short time string parse as HH:MM
      *
-     * @var bool
      * @return void
+     * @noinspection PhpUnused
      */
-    public static function shortTimeAsMinutes()
+    public static function shortTimeAsMinutes(): void
     {
         static::$shortAsMinutes = true;
     }
@@ -176,10 +180,9 @@ class TimeInterval extends DateInterval implements JsonSerializable
     /**
      * Short time string parse as MM:SS
      *
-     * @var bool
      * @return void
      */
-    public static function shortTimeAsSeconds()
+    public static function shortTimeAsSeconds(): void
     {
         static::$shortAsMinutes = false;
     }
@@ -199,7 +202,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      *
      * @return string
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): string
     {
         return $this->format(static::$toJsonFormat);
     }
@@ -209,7 +212,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      *
      * @return int
      */
-    public function toSeconds()
+    public function toSeconds(): int
     {
         $startOfDay = Chronos::now()->startOfDay();
 

@@ -1,10 +1,14 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Database\Type;
 
 use Cake\Database\Driver;
-use Cake\Database\Type;
-use DateInterval;
+use Cake\Database\DriverInterface;
+use Cake\Database\Type\BaseType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use Exception;
 use UnexpectedValueException;
@@ -14,7 +18,7 @@ use UnexpectedValueException;
  *
  * @link http://book.cakephp.org/3.0/en/orm/database-basics.html#adding-custom-database-types
  */
-class TimeIntervalType extends Type
+class TimeIntervalType extends BaseType
 {
     use TimeIntervalMarshalTrait;
 
@@ -24,7 +28,7 @@ class TimeIntervalType extends Type
      * @return mixed|null
      * @throws Exception
      */
-    public function toPHP($value, Driver $driver)
+    public function toPHP($value, DriverInterface $driver): ?TimeInterval
     {
         if ($value === null) {
             return null;
@@ -40,7 +44,7 @@ class TimeIntervalType extends Type
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public function toDatabase($value, Driver $driver)
+    public function toDatabase($value, DriverInterface $driver): ?string
     {
         if ($value === null) {
             return null;

@@ -1,9 +1,14 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Database\Type;
 
 use Cake\Database\Driver;
-use Cake\Database\Type;
+use Cake\Database\DriverInterface;
+use Cake\Database\Type\BaseType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use Exception;
 use PDO;
@@ -14,7 +19,7 @@ use UnexpectedValueException;
  *
  * @link http://book.cakephp.org/3.0/en/orm/database-basics.html#adding-custom-database-types
  */
-class TimeIntervalAsIntType extends Type
+class TimeIntervalAsIntType extends BaseType
 {
     use TimeIntervalMarshalTrait;
 
@@ -24,13 +29,13 @@ class TimeIntervalAsIntType extends Type
      * @return mixed|null
      * @throws Exception
      */
-    public function toPHP($value, Driver $driver)
+    public function toPHP($value, DriverInterface $driver): ?TimeInterval
     {
         if ($value === null) {
             return null;
         }
 
-        return TimeInterval::createFromSeconds($value);
+        return TimeInterval::createFromSeconds((int)$value);
     }
 
     /**
@@ -40,7 +45,7 @@ class TimeIntervalAsIntType extends Type
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public function toDatabase($value, Driver $driver)
+    public function toDatabase($value, DriverInterface $driver): ?int
     {
         if ($value === null) {
             return null;
@@ -54,9 +59,9 @@ class TimeIntervalAsIntType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function toStatement($value, Driver $driver)
+    public function toStatement($value, DriverInterface $driver): int
     {
         if ($value === null) {
             return PDO::PARAM_NULL;

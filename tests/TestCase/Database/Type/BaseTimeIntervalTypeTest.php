@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Test\TestCase\Database\Type;
 
@@ -6,6 +10,7 @@ use Cake\Database\Driver;
 use Cake\Database\Type;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
+use DateInterval;
 use Elastic\TimeInterval\Database\Type\TimeIntervalAsIntType;
 use Elastic\TimeInterval\Database\Type\TimeIntervalType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
@@ -18,11 +23,11 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
     protected $type;
 
     /**
-     * @var Driver|\PHPUnit_Framework_MockObject_MockObject
+     * @var Driver
      */
     protected $driver;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->type, $this->driver);
         parent::tearDown();
@@ -33,7 +38,7 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
      *
      * @dataProvider dataToPHP
      */
-    public function testToPHP($database, $expected)
+    public function testToPHP($database, $expected): void
     {
         $result = $this->type->toPHP($database, $this->driver);
         $this->assertInstanceOf(TimeInterval::class, $result);
@@ -45,12 +50,12 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
      *
      * @return array
      */
-    abstract public function dataToPHP();
+    abstract public function dataToPHP(): array;
 
     /**
      * test convert null value to PHP
      */
-    public function testToPHPWithNull()
+    public function testToPHPWithNull(): void
     {
         $this->assertNull($this->type->toPHP(null, $this->driver));
     }
@@ -60,7 +65,7 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
      *
      * @dataProvider dataMarshal
      */
-    public function testMarshal($value, $expected)
+    public function testMarshal($value, $expected): void
     {
         $result = $this->type->marshal($value);
         $this->assertInstanceOf(TimeInterval::class, $result);
@@ -72,7 +77,7 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
      *
      * @return array
      */
-    public function dataMarshal()
+    public function dataMarshal(): array
     {
         $a = new FrozenTime('2019-01-01 00:00:00');
         $b = new FrozenTime('2019-01-02 02:15:01');
@@ -86,8 +91,8 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
             ['-25:15:01', '-25:15:01'],
             ['25:15', '25:15:00'],
             ['-25:15', '-25:15:00'],
-            [new \DateInterval('PT25H15M1S'), '25:15:01'],
-            [new \DateInterval('P1DT2H15M1S'), '26:15:01'],
+            [new DateInterval('PT25H15M1S'), '25:15:01'],
+            [new DateInterval('P1DT2H15M1S'), '26:15:01'],
             [$a->diff($b), '26:15:01'],
             [$c->diff($d), '698:15:01'],
             [0, '00:00:00'],
@@ -103,7 +108,7 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
     /**
      * test convert null value
      */
-    public function testMarshalWithNull()
+    public function testMarshalWithNull(): void
     {
         $this->assertNull($this->type->marshal(null));
     }

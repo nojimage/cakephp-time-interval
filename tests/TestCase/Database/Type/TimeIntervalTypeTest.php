@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright 2022 ELASTIC Consultants Inc.
+ */
+declare(strict_types=1);
 
 namespace Elastic\TimeInterval\Test\TestCase\Database\Type;
 
@@ -9,7 +13,7 @@ use PDO;
 
 class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->type = new TimeIntervalType();
@@ -21,7 +25,7 @@ class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
      *
      * @return array
      */
-    public function dataToPHP()
+    public function dataToPHP(): array
     {
         return [
             ['00:00:01', '00:00:01'],
@@ -34,7 +38,7 @@ class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
     /**
      * test convert PHP to DB
      */
-    public function testToDatabase()
+    public function testToDatabase(): void
     {
         $this->assertNull($this->type->toDatabase(null, $this->driver));
         $this->assertSame('00:00:01', $this->type->toDatabase(TimeInterval::createFromString('00:00:01'), $this->driver));
@@ -48,7 +52,7 @@ class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
     /**
      * test get statement
      */
-    public function testToStatement()
+    public function testToStatement(): void
     {
         $this->assertSame(PDO::PARAM_NULL, $this->type->toStatement(null, $this->driver));
         $this->assertSame(PDO::PARAM_STR, $this->type->toStatement(TimeInterval::createFromSeconds(1), $this->driver));
