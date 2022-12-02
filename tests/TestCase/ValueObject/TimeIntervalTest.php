@@ -136,17 +136,4 @@ class TimeIntervalTest extends TestCase
             [-86401, '-24:00:01'],
         ];
     }
-
-    public function testCanCompare()
-    {
-        $a = TimeInterval::createFromString('00:00:00');
-        $b = TimeInterval::createFromSeconds(0);
-        $c = TimeInterval::createFromString('00:00:01');
-        $d = TimeInterval::createFromSeconds(1);
-
-        $this->assertTrue($a == $b);
-        $this->assertTrue($c == $d);
-        $this->assertFalse($a == $c);
-        $this->assertFalse($b == $d);
-    }
 }
