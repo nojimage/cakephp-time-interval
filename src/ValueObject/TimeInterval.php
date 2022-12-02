@@ -100,7 +100,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
             $hours = 0;
         }
 
-        $interval = new static(sprintf('PT%dH%dM%dS', abs($hours), $minutes, $seconds));
+        $interval = new static(sprintf('PT%dH%dM%dS', abs((int)$hours), $minutes, $seconds));
         $interval->invert = $minus === '-';
 
         return $interval;
