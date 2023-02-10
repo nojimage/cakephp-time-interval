@@ -5,7 +5,7 @@
         <img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square">
     </a>
     <a href="https://github.com/nojimage/cakephp-time-interval/actions" target="_blank">
-        <img alt="Build Status" src="https://img.shields.io/github/workflow/status/nojimage/cakephp-time-interval/CakePHP%20Plugin%20CI?style=flat-square">
+        <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/nojimage/cakephp-time-interval/ci.yml?style=flat-square">
     </a>
     <a href="https://codecov.io/gh/nojimage/cakephp-time-interval" target="_blank">
         <img alt="Codecov" src="https://img.shields.io/codecov/c/github/nojimage/cakephp-time-interval.svg?style=flat-square">
