@@ -14,11 +14,11 @@ class TimeIntervalValidation extends Validation
     /**
      * Time validation, determines if the string passed is a valid time.
      *
-     * @param int|string|array|\DateInterval $check a valid time string/object
+     * @param mixed $check a valid time string/object
      * @param array|bool $allowNegative allow negative interval
      * @return bool Success
      */
-    public static function timeInterval($check, $allowNegative = true): bool
+    public static function timeInterval(mixed $check, array|bool $allowNegative = true): bool
     {
         if ($check instanceof DateInterval) {
             return $allowNegative || !$check->invert;

@@ -7,25 +7,27 @@ declare(strict_types=1);
 namespace Elastic\TimeInterval\Test\TestCase\Model\Table;
 
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use TestApp\Model\Table\WorkTimesTable;
 
 class WorkTimesTableTest extends TestCase
 {
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.Elastic/TimeInterval.WorkTimes',
     ];
 
     /**
-     * @var WorkTimesTable
+     * @var WorkTimesTable|Table
      */
-    private $table;
+    private WorkTimesTable|Table $table;
 
     public function setUp(): void
     {
-        parent::setUp();
         $this->loadPlugins(['Elastic/TimeInterval']);
+
+        parent::setUp();
 
         $this->table = $this->getTableLocator()->get('WorkTimes');
     }

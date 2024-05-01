@@ -17,7 +17,7 @@ class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
     {
         parent::setUp();
         $this->type = new TimeIntervalType();
-        $this->driver = $this->getMockForAbstractClass(Driver::class);
+        $this->driver = $this->getMockBuilder(Driver::class)->getMock();
     }
 
     /**
@@ -25,7 +25,7 @@ class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
      *
      * @return array
      */
-    public function dataToPHP(): array
+    public static function dataToPHP(): array
     {
         return [
             ['00:00:01', '00:00:01'],

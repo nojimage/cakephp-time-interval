@@ -7,11 +7,9 @@ declare(strict_types=1);
 namespace Elastic\TimeInterval\Database\Type;
 
 use Cake\Database\Driver;
-use Cake\Database\DriverInterface;
 use Cake\Database\Type\BaseType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use Exception;
-use UnexpectedValueException;
 
 /**
  * TimeInterval custom type for MySQL's TIME column
@@ -25,10 +23,10 @@ class TimeIntervalType extends BaseType
     /**
      * @param mixed $value the value from database
      * @param Driver $driver db driver
-     * @return mixed|null
+     * @return TimeInterval|null
      * @throws Exception
      */
-    public function toPHP($value, DriverInterface $driver): ?TimeInterval
+    public function toPHP(mixed $value, Driver $driver): ?TimeInterval
     {
         if ($value === null) {
             return null;
@@ -40,11 +38,10 @@ class TimeIntervalType extends BaseType
     /**
      * @param mixed $value the value to database
      * @param Driver $driver db driver
-     * @return false|mixed|string
-     * @throws UnexpectedValueException
+     * @return string|null
      * @throws Exception
      */
-    public function toDatabase($value, DriverInterface $driver): ?string
+    public function toDatabase(mixed $value, Driver $driver): ?string
     {
         if ($value === null) {
             return null;

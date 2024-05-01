@@ -24,7 +24,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      *
      * @var int
      */
-    public $seconds;
+    public int $seconds;
 
     /**
      * Short time string parse as HH:MM
@@ -33,21 +33,21 @@ class TimeInterval extends DateInterval implements JsonSerializable
      *
      * @var bool
      */
-    protected static $shortAsMinutes = true;
+    protected static bool $shortAsMinutes = true;
 
     /**
      * Formatter for to string convert.
      *
      * @var string
      */
-    protected static $toStringFormat = '%r%H:%I:%S';
+    protected static string $toStringFormat = '%r%H:%I:%S';
 
     /**
      * Formatter for to json convert.
      *
      * @var string
      */
-    protected static $toJsonFormat = '%r%H:%I:%S';
+    protected static string $toJsonFormat = '%r%H:%I:%S';
 
     /**
      * @inheritDoc
@@ -90,7 +90,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
             throw new UnexpectedValueException(sprintf('The value not match time format: %s', $value));
         }
 
-        /** @noinspection PhpUnusedLocalVariableInspection */
+        // phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
         [$all, $minus, $hours, $minutes, $seconds] = array_pad($matches, 5, null);
 
         // parse as seconds
@@ -192,7 +192,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->format(static::$toStringFormat);
     }
@@ -216,6 +216,6 @@ class TimeInterval extends DateInterval implements JsonSerializable
     {
         $startOfDay = Chronos::now()->startOfDay();
 
-        return $startOfDay->diffInSeconds($startOfDay->add($this), false);
+        return $startOfDay->diffInSeconds(new Chronos($startOfDay->toNative()->add($this)), false);
     }
 }

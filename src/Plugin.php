@@ -8,7 +8,7 @@ namespace Elastic\TimeInterval;
 
 use Cake\Core\BasePlugin;
 use Cake\Core\PluginApplicationInterface;
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\Validation\Validator;
 use Elastic\TimeInterval\Database\Type\TimeIntervalAsIntType;
 use Elastic\TimeInterval\Database\Type\TimeIntervalType;
@@ -24,37 +24,37 @@ class Plugin extends BasePlugin
      *
      * @var bool
      */
-    protected $bootstrapEnabled = true;
+    protected bool $bootstrapEnabled = true;
 
     /**
      * Enable middleware
      *
      * @var bool
      */
-    protected $middlewareEnabled = false;
+    protected bool $middlewareEnabled = false;
 
     /**
      * Load routes or not
      *
      * @var bool
      */
-    protected $routesEnabled = false;
+    protected bool $routesEnabled = false;
 
     /**
      * Console middleware
      *
      * @var bool
      */
-    protected $consoleEnabled = false;
+    protected bool $consoleEnabled = false;
 
     /**
      * @inheritDoc
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        if (!Type::getMap('time_interval')) {
-            Type::set('time_interval', new TimeIntervalType());
-            Type::set('time_interval_int', new TimeIntervalAsIntType());
+        if (!TypeFactory::getMap('time_interval')) {
+            TypeFactory::map('time_interval', TimeIntervalType::class);
+            TypeFactory::map('time_interval_int', TimeIntervalAsIntType::class);
         }
 
         Validator::addDefaultProvider('timeInterval', new TimeIntervalValidation());

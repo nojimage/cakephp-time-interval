@@ -93,7 +93,6 @@ class TimeIntervalValidationTest extends TestCase
         $this->assertTrue(TimeIntervalValidation::timeInterval(TimeInterval::createFromString('-01:00:00')));
         $this->assertFalse(TimeIntervalValidation::timeInterval(new DateTime()));
         $this->assertFalse(TimeIntervalValidation::timeInterval(new DateTimeImmutable()));
-        /** @noinspection PhpParamsInspection */
         $this->assertFalse(TimeIntervalValidation::timeInterval(new stdClass()));
     }
 

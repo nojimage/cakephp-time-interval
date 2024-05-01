@@ -7,12 +7,10 @@ declare(strict_types=1);
 namespace Elastic\TimeInterval\Database\Type;
 
 use Cake\Database\Driver;
-use Cake\Database\DriverInterface;
 use Cake\Database\Type\BaseType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use Exception;
 use PDO;
-use UnexpectedValueException;
 
 /**
  * TimeInterval custom type for INTEGER column
@@ -29,7 +27,7 @@ class TimeIntervalAsIntType extends BaseType
      * @return mixed|null
      * @throws Exception
      */
-    public function toPHP($value, DriverInterface $driver): ?TimeInterval
+    public function toPHP(mixed $value, Driver $driver): ?TimeInterval
     {
         if ($value === null) {
             return null;
@@ -41,11 +39,10 @@ class TimeIntervalAsIntType extends BaseType
     /**
      * @param mixed $value the value to database
      * @param Driver $driver db driver
-     * @return false|mixed|string
-     * @throws UnexpectedValueException
+     * @return int|null
      * @throws Exception
      */
-    public function toDatabase($value, DriverInterface $driver): ?int
+    public function toDatabase(mixed $value, Driver $driver): ?int
     {
         if ($value === null) {
             return null;
@@ -61,7 +58,7 @@ class TimeIntervalAsIntType extends BaseType
     /**
      * @inheritDoc
      */
-    public function toStatement($value, DriverInterface $driver): int
+    public function toStatement($value, Driver $driver): int
     {
         if ($value === null) {
             return PDO::PARAM_NULL;

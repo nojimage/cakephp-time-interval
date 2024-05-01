@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace Elastic\TimeInterval\Test\TestCase\Database\Type;
 
 use Cake\Database\Driver;
-use Cake\Database\Type;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
 use DateInterval;
@@ -18,14 +17,14 @@ use Elastic\TimeInterval\ValueObject\TimeInterval;
 abstract class BaseTimeIntervalTypeTest extends TestCase
 {
     /**
-     * @var Type|TimeIntervalType|TimeIntervalAsIntType
+     * @var TimeIntervalType|TimeIntervalAsIntType
      */
-    protected $type;
+    protected TimeIntervalAsIntType|TimeIntervalType $type;
 
     /**
      * @var Driver
      */
-    protected $driver;
+    protected Driver $driver;
 
     public function tearDown(): void
     {
@@ -50,7 +49,7 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
      *
      * @return array
      */
-    abstract public function dataToPHP(): array;
+    abstract public static function dataToPHP(): array;
 
     /**
      * test convert null value to PHP
@@ -77,7 +76,7 @@ abstract class BaseTimeIntervalTypeTest extends TestCase
      *
      * @return array
      */
-    public function dataMarshal(): array
+    public static function dataMarshal(): array
     {
         $a = new FrozenTime('2019-01-01 00:00:00');
         $b = new FrozenTime('2019-01-02 02:15:01');

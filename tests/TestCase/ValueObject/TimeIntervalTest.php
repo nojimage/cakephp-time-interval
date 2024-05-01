@@ -30,14 +30,14 @@ class TimeIntervalTest extends TestCase
 
     public function testJsonSerialize(): void
     {
-        $this->assertSame('"00:00:01"', json_encode(new TimeInterval('PT1S')));
-        $this->assertSame('"00:01:15"', json_encode(new TimeInterval('PT1M15S')));
-        $this->assertSame('"25:30:15"', json_encode(new TimeInterval('PT25H30M15S')));
-        $this->assertSame('"02:30:15"', json_encode(new TimeInterval('P1DT2H30M15S')));
+        $this->assertSame('"00:00:01"', json_encode(new TimeInterval('PT1S'), JSON_THROW_ON_ERROR));
+        $this->assertSame('"00:01:15"', json_encode(new TimeInterval('PT1M15S'), JSON_THROW_ON_ERROR));
+        $this->assertSame('"25:30:15"', json_encode(new TimeInterval('PT25H30M15S'), JSON_THROW_ON_ERROR));
+        $this->assertSame('"02:30:15"', json_encode(new TimeInterval('P1DT2H30M15S'), JSON_THROW_ON_ERROR));
 
         $negativeInterval = new TimeInterval('PT1M15S');
         $negativeInterval->invert = true;
-        $this->assertSame('"-00:01:15"', json_encode($negativeInterval));
+        $this->assertSame('"-00:01:15"', json_encode($negativeInterval, JSON_THROW_ON_ERROR));
     }
 
     public function testToSeconds(): void
@@ -80,7 +80,7 @@ class TimeIntervalTest extends TestCase
      *
      * @return array
      */
-    public function dataCreateFromString(): array
+    public static function dataCreateFromString(): array
     {
         return [
             ['00:00:01', '00:00:01'],
@@ -130,7 +130,7 @@ class TimeIntervalTest extends TestCase
      *
      * @return array
      */
-    public function dataCreateFromSeconds(): array
+    public static function dataCreateFromSeconds(): array
     {
         return [
             [1, '00:00:01'],

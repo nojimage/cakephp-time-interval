@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace TestApp\Model\Entity;
 
-use Cake\Database\Type;
+use Cake\Database\TypeFactory;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
@@ -21,10 +21,10 @@ use Elastic\TimeInterval\ValueObject\TimeInterval;
  */
 class WorkTime extends Entity
 {
-    protected $_accessible = ['*' => true, 'id' => false];
+    protected array $_accessible = ['*' => true, 'id' => false];
 
-    protected function _setDuration($value)
+    protected function _setDuration(mixed $value): ?TimeInterval
     {
-        return Type::build('time_interval')->marshal($value);
+        return TypeFactory::build('time_interval')->marshal($value);
     }
 }

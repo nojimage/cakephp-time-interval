@@ -15,11 +15,10 @@ trait TimeIntervalMarshalTrait
 {
     /**
      * @param mixed $value the value
-     * @return mixed
-     * @throws UnexpectedValueException
+     * @return TimeInterval|null
      * @throws Exception
      */
-    public function marshal($value): ?TimeInterval
+    public function marshal(mixed $value): ?TimeInterval
     {
         if ($value === null || $value instanceof TimeInterval) {
             return $value;

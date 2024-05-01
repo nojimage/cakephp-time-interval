@@ -6,7 +6,8 @@ declare(strict_types=1);
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
+use Cake\TestSuite\Fixture\SchemaLoader;
+use Migrations\TestSuite\Migrator;
 
 /**
  * Test suite bootstrap for RememberMe.
@@ -34,9 +35,18 @@ $here = __DIR__;
 chdir($root);
 require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 
-Cache::clearAll();
+// setup migration
+$schemaLoader = new SchemaLoader();
+$schemaLoader->loadInternalFile($here . '/test_app/config/schema.php');
 
-FrozenTime::setJsonEncodeFormat('yyyy-MM-dd\'T\'HH:mm:ssxxx');
+// phpcs:ignore SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+$migrator = new Migrator();
+//$migrator->run([
+//    'plugin' => 'Elastic/TimeInterval',
+//    'skip' => ['work_times'],
+//]);
+
+Cache::clearAll();
 
 error_reporting(E_ALL);
 
