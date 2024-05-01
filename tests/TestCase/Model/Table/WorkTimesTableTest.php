@@ -61,7 +61,7 @@ class WorkTimesTableTest extends TestCase
         // set with DateInterval object
         $now = FrozenTime::now();
         $recordFromDateInterval = $this->table->newEntity([
-            'rest' => $now->diff($now->addDays(2)->addHour()->addMinutes(2)->addSeconds(3)),
+            'rest' => $now->diff($now->addDays(2)->addHours(1)->addMinutes(2)->addSeconds(3)),
         ]);
         $this->assertInstanceOf(TimeInterval::class, $recordFromDateInterval->rest);
         $this->assertSame('49:02:03', (string)$recordFromDateInterval->rest);
@@ -85,7 +85,7 @@ class WorkTimesTableTest extends TestCase
         // set with DateInterval object
         $now = FrozenTime::now();
         $recordFromDateInterval = $this->table->newEntity([]);
-        $recordFromDateInterval->duration = $now->diff($now->addDays(2)->addHour()->addMinutes(2)->addSeconds(3));
+        $recordFromDateInterval->duration = $now->diff($now->addDays(2)->addHours(1)->addMinutes(2)->addSeconds(3));
         $this->assertInstanceOf(TimeInterval::class, $recordFromDateInterval->duration);
         $this->assertSame('49:02:03', (string)$recordFromDateInterval->duration);
 
@@ -109,7 +109,7 @@ class WorkTimesTableTest extends TestCase
 
         // set with DateInterval object and save
         $now = FrozenTime::now();
-        $record->rest = $now->diff($now->addDays(2)->addHour()->addMinutes(2)->addSeconds(3));
+        $record->rest = $now->diff($now->addDays(2)->addHours(1)->addMinutes(2)->addSeconds(3));
         $this->assertNotFalse($this->table->save($record));
         $recordFromDateInterval = $this->table->get($record->id);
         $this->assertInstanceOf(TimeInterval::class, $recordFromDateInterval->rest);
@@ -136,7 +136,7 @@ class WorkTimesTableTest extends TestCase
 
         // set with DateInterval object and save
         $now = FrozenTime::now();
-        $record->rest_seconds = $now->diff($now->addDays(2)->addHour()->addMinutes(2)->addSeconds(3));
+        $record->rest_seconds = $now->diff($now->addDays(2)->addHours(1)->addMinutes(2)->addSeconds(3));
         $this->assertNotFalse($this->table->save($record));
         $recordFromDateInterval = $this->table->get($record->id);
         $this->assertInstanceOf(TimeInterval::class, $recordFromDateInterval->rest_seconds);
