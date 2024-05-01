@@ -14,7 +14,7 @@ use Elastic\TimeInterval\Database\Type\TimeIntervalAsIntType;
 use Elastic\TimeInterval\Database\Type\TimeIntervalType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 
-abstract class BaseTimeIntervalTypeTest extends TestCase
+abstract class TimeIntervalTypeTestBase extends TestCase
 {
     /**
      * @var TimeIntervalType|TimeIntervalAsIntType

@@ -11,7 +11,7 @@ use Elastic\TimeInterval\Database\Type\TimeIntervalType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use PDO;
 
-class TimeIntervalTypeTest extends BaseTimeIntervalTypeTest
+class TimeIntervalTypeTest extends TimeIntervalTypeTestBase
 {
     public function setUp(): void
     {
