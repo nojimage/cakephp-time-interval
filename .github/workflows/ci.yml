@@ -93,6 +93,10 @@ jobs:
             composer update
           fi
 
+      - name: Wait for MySQL
+        if: matrix.db-type == 'mysql' || matrix.db-type == 'mysql:8.0'
+        run: while ! `mysqladmin ping -h 127.0.0.1 --silent`; do printf 'Waiting for MySQL...\n'; sleep 2; done;
+
       - name: Run PHPUnit
         env:
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
