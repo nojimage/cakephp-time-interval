@@ -31,9 +31,9 @@ class WorkTimesTable extends Table
     /**
      * @inheritDoc
      */
-    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
+    public function getSchema(): TableSchemaInterface
     {
-        parent::_initializeSchema($schema);
+        $schema = parent::getSchema();
 
         $schema->setColumnType('rest', 'time_interval');
         $schema->setColumnType('rest_seconds', 'time_interval_int');
