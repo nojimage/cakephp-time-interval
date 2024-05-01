@@ -19,6 +19,14 @@ This plugin provide `time_interval` custom type for MySQL's `TIME`, Postgres's `
  and provide `time_interval_int` custom type for seconds as `INTEGER`.
 This is a custom type to represent intervals, which CakePHP can treat as a `TimeInterval` object that inherits from `DateInterval`.
 
+## Version Map
+
+| CakePHP Version | Plugin Version | Branch         |
+|-----------------|----------------|----------------|
+| 5.x             | 3.x            | cake5          |
+| 4.x             | 2.x            | cake4          |
+| 3.x             | 0.3.x          | cake3          |
+
 ## Installation
 
 You can install this plugin into your CakePHP application using [composer](http://getcomposer.org).
@@ -107,7 +115,7 @@ $workTime->duration = 3600; // as a seconds
 
 ### MySQL TIME column limitation.
 
-[MySQL :: MySQL 5.7 Reference Manual :: 11.3.2 The TIME Type](https://dev.mysql.com/doc/refman/5.7/en/time.html)
+[MySQL :: MySQL 8.0 Reference Manual :: 13.2.3 The TIME Type](https://dev.mysql.com/doc/refman/8.0/en/time.html)
 
     By default, values that lie outside the TIME range but are otherwise valid are clipped to the closest endpoint of the range. For example,
     '-850:00:00' and '850:00:00' are converted to '-838:59:59' and '838:59:59'. Invalid TIME values are converted to '00:00:00'.
