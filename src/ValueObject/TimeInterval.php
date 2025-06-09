@@ -126,8 +126,8 @@ class TimeInterval extends DateInterval implements JsonSerializable
                 $value->invert ? '-' : '',
                 $hours,
                 $minutes,
-                $seconds
-            )
+                $seconds,
+            ),
         );
     }
 

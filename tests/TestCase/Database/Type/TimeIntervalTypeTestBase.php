@@ -13,6 +13,7 @@ use DateInterval;
 use Elastic\TimeInterval\Database\Type\TimeIntervalAsIntType;
 use Elastic\TimeInterval\Database\Type\TimeIntervalType;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 abstract class TimeIntervalTypeTestBase extends TestCase
 {
@@ -34,9 +35,8 @@ abstract class TimeIntervalTypeTestBase extends TestCase
 
     /**
      * test convert DB to PHP
-     *
-     * @dataProvider dataToPHP
      */
+    #[DataProvider('dataToPHP')]
     public function testToPHP($database, $expected): void
     {
         $result = $this->type->toPHP($database, $this->driver);
@@ -61,9 +61,8 @@ abstract class TimeIntervalTypeTestBase extends TestCase
 
     /**
      * test convert value
-     *
-     * @dataProvider dataMarshal
      */
+    #[DataProvider('dataMarshal')]
     public function testMarshal($value, $expected): void
     {
         $result = $this->type->marshal($value);
