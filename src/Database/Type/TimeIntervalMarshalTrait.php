@@ -29,7 +29,7 @@ trait TimeIntervalMarshalTrait
         }
 
         if (is_numeric($value)) {
-            return TimeInterval::createFromSeconds($value);
+            return TimeInterval::createFromSeconds((int)$value);
         }
 
         if (is_string($value)) {

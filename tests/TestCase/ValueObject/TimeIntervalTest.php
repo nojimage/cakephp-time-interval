@@ -9,6 +9,7 @@ namespace Elastic\TimeInterval\Test\TestCase\ValueObject;
 use Cake\I18n\FrozenTime;
 use Elastic\TimeInterval\ValueObject\TimeInterval;
 use Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -64,11 +65,11 @@ class TimeIntervalTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCreateFromString
      * @param string $value the value
      * @param string $expected the expected value
      * @throws Exception
      */
+    #[DataProvider('dataCreateFromString')]
     public function testCreateFromString(string $value, string $expected): void
     {
         $interval = TimeInterval::createFromString($value);
@@ -113,11 +114,11 @@ class TimeIntervalTest extends TestCase
     }
 
     /**
-     * @dataProvider dataCreateFromSeconds
      * @param int $value the value
      * @param string $expected the expected value
      * @throws Exception
      */
+    #[DataProvider('dataCreateFromSeconds')]
     public function testCreateFromSeconds(int $value, string $expected): void
     {
         $interval = TimeInterval::createFromSeconds($value);

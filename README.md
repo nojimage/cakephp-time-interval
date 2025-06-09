@@ -15,8 +15,8 @@
     </a>
 </p>
 
-This plugin provide `time_interval` custom type for MySQL's `TIME`, Postgres's `INTERVAL`,
- and provide `time_interval_int` custom type for seconds as `INTEGER`.
+This plugin provides `time_interval` custom type for MySQL's `TIME`, Postgres's `INTERVAL`,
+ and provides `time_interval_int` custom type for seconds as `INTEGER`.
 This is a custom type to represent intervals, which CakePHP can treat as a `TimeInterval` object that inherits from `DateInterval`.
 
 ## Version Map
@@ -92,7 +92,7 @@ class WorkTimesTable extends Table
 }
 ```
 
-### In addition, add mutator to Entity class, it is useful.
+### Adding a mutator to the Entity class is useful
 
 ```php
 use Cake\Database\Type;
@@ -107,13 +107,13 @@ class WorkTime extends Entity
 }
 
 $workTime->duration = '00:15:00';
-$workTime->duration = ($startTime)->diff($endTime); // $startTime, $endTime is FrozenTime object.
-$workTime->duration = 3600; // as a seconds
+$workTime->duration = ($startTime)->diff($endTime); // $startTime, $endTime are DateTime objects.
+$workTime->duration = 3600; // as seconds
 ```
 
 ## NOTE
 
-### MySQL TIME column limitation.
+### MySQL TIME column limitation
 
 [MySQL :: MySQL 8.0 Reference Manual :: 13.2.3 The TIME Type](https://dev.mysql.com/doc/refman/8.0/en/time.html)
 
@@ -122,9 +122,9 @@ $workTime->duration = 3600; // as a seconds
     Note that because '00:00:00' is itself a valid TIME value, there is no way to tell, from a value of '00:00:00' stored in a table,
     whether the original value was specified as '00:00:00' or whether it was invalid.
 
-### DateInterval / TimeInterval construct with date part will be broken time
+### DateInterval / TimeInterval constructed with date parts will have incorrect time interpretation
 
-If you initialize DateInterval with date part, time will not be interpreted correctly.
+If you initialize DateInterval with date parts, time will not be interpreted correctly.
 
 ```php
 $workTime->duration = new DateInterval('PT75H4M5S'); // OK
