@@ -22,9 +22,9 @@ class TimeIntervalAsIntType extends BaseType
     use TimeIntervalMarshalTrait;
 
     /**
-     * @param mixed $value the value from database
+     * @param mixed $value the value from the database
      * @param Driver $driver db driver
-     * @return mixed|null
+     * @return TimeInterval|null
      * @throws Exception
      */
     public function toPHP(mixed $value, Driver $driver): ?TimeInterval
@@ -37,7 +37,7 @@ class TimeIntervalAsIntType extends BaseType
     }
 
     /**
-     * @param mixed $value the value to database
+     * @param mixed $value the value to the database
      * @param Driver $driver db driver
      * @return int|null
      * @throws Exception
@@ -52,7 +52,7 @@ class TimeIntervalAsIntType extends BaseType
             $value = $this->marshal($value);
         }
 
-        return $value->toSeconds();
+        return $value?->toSeconds();
     }
 
     /**

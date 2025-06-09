@@ -52,7 +52,7 @@ class TimeInterval extends DateInterval implements JsonSerializable
     /**
      * @inheritDoc
      */
-    public function __construct($interval_spec)
+    public function __construct(string $interval_spec)
     {
         parent::__construct($interval_spec);
 
@@ -65,9 +65,15 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromDateString($datetime): DateInterval
+    public static function createFromDateString(string $datetime): DateInterval
     {
         $original = parent::createFromDateString($datetime);
+
+        if (!$original instanceof DateInterval) {
+            throw new UnexpectedValueException(
+                sprintf('Can\'t create DateInterval from date string: %s', $datetime),
+            );
+        }
 
         return static::createFromDateInterval($original);
     }
@@ -76,11 +82,11 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * create from time string
      *
      * @param string $value '00:00:00'
-     * @return TimeInterval
+     * @return self
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromString(string $value): TimeInterval
+    public static function createFromString(string $value): self
     {
         if ($value === '') {
             $value = '00:00:00';
@@ -100,8 +106,8 @@ class TimeInterval extends DateInterval implements JsonSerializable
             $hours = 0;
         }
 
-        $interval = new static(sprintf('PT%dH%dM%dS', abs((int)$hours), $minutes, $seconds));
-        $interval->invert = $minus === '-';
+        $interval = new self(sprintf('PT%dH%dM%dS', abs((int)$hours), $minutes, $seconds));
+        $interval->invert = (int)($minus === '-');
 
         return $interval;
     }
@@ -110,17 +116,17 @@ class TimeInterval extends DateInterval implements JsonSerializable
      * create from DateInterval
      *
      * @param DateInterval $value a DateInterval instance
-     * @return TimeInterval
+     * @return self
      * @throws UnexpectedValueException
      * @throws Exception
      */
-    public static function createFromDateInterval(DateInterval $value): TimeInterval
+    public static function createFromDateInterval(DateInterval $value): self
     {
-        $hours = $value->h + (static::getDays($value) * 24);
+        $hours = $value->h + (self::getDays($value) * 24);
         $minutes = $value->i;
         $seconds = $value->s;
 
-        return static::createFromString(
+        return self::createFromString(
             sprintf(
                 '%s%d:%d:%d',
                 $value->invert ? '-' : '',
